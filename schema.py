@@ -18,5 +18,11 @@ class Recipie(BaseModel):
     name = str
     picture_url = str
 
+
+class Instruction(BaseModel):
+
+
+class Ingredient(BaseModel):
+
     class Config:
         orm_mode = True
