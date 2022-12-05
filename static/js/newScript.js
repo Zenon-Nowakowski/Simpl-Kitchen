@@ -1,10 +1,11 @@
 form = document.getElementById("updateForm");
 
-function updateRecipe(id, name) {
+function updateRecipe(id, name, instructions) {
     fetch("/recipe/" + id, {
         method: "PATCH",
         body: JSON.stringify({
-            name
+            name,
+            instructions
         }),
     }).then((response) => response.json());
     window.location.reload();
@@ -13,9 +14,11 @@ function updateRecipe(id, name) {
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("name").value;
+    const instructions = document.getElementById("name").value;
     const id = document.getElementById("id").value;
 
-    updateMovie(id, name);
+
+    updateMovie(id, name, instructions);
 });
 
 async function deleteRecipe(id) {
