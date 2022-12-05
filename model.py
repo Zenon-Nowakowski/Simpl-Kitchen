@@ -3,6 +3,7 @@ from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Integer, Text
 from database import Base
 
+
 class Movie(Base):
     __tablename__ = "Movie"
 
@@ -12,3 +13,7 @@ class Movie(Base):
     type = Column(String(20))
     url = Column(String(100))
     rating = Column(Integer)
+
+
+class Recipe(Base):
+    __tablename__ = "Recipe"
