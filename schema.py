@@ -28,5 +28,11 @@ class Ingredient(BaseModel):
     id = int
     title = str
 
+
+class Recipe_Ingredient(BaseModel):
+    recipe_id = int
+    ingredient_id: int
+    quantity: int
+
     class Config:
         orm_mode = True
