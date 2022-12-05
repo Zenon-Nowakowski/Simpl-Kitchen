@@ -62,6 +62,7 @@ async def create_movie(db: Session = Depends(get_database_session), name: schema
     return response
 
 
+''' This is the function to add recipes to the database'''
 # @app.post("/recipe/")
 # async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), instruction: schema.Recipe.instruction_id = Form(...)):
 
@@ -107,16 +108,16 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     })
 
 
-@app.delete("/movie/{id}")
-async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
-    movie = db.query(Movie).get(id)
-    db.delete(movie)
-    db.commit()
-    return JSONResponse(status_code=200, content={
-        "status_code": 200,
-        "message": "success",
-        "movie": None
-    })
+# @app.delete("/movie/{id}")
+# async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
+#     movie = db.query(Movie).get(id)
+#     db.delete(movie)
+#     db.commit()
+#     return JSONResponse(status_code=200, content={
+#         "status_code": 200,
+#         "message": "success",
+#         "movie": None
+#     })
 
 
 @app.delete("/recipe/{id}")
