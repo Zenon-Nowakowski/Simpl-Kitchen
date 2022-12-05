@@ -37,7 +37,7 @@ def get_database_session():
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request, db: Session = Depends(get_database_session)):
     records = db.query(Recipe).all()
-    return templates.TemplateResponse("index.html", {"request": request, "data": records})
+    return templates.TemplateResponse("newIndex.html", {"request": request, "data": records})
 
 
 @app.get("/movie/{name}", response_class=HTMLResponse)
@@ -49,7 +49,7 @@ def read_item(request: Request, name: schema.Movie.name, db: Session = Depends(g
 @app.get("/recipe/{name}", response_class=HTMLResponse)
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
-    return templates.TemplateResponse("overview.html", {"request": request, "recipe": item})
+    return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item})
 
 
 @app.post("/movie/")
