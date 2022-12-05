@@ -15,7 +15,7 @@ class Movie(Base):
     rating = Column(Integer)
 
 
-class Recipes(Base):
+class Recipe(Base):
     __tablename__ = "recipes"
     id = Column(Integer, primary_key=True, index=True)
     instruction_id = Column(Integer, ForeignKey("instructions.id"))
@@ -23,20 +23,20 @@ class Recipes(Base):
     picture_url = Column(String(100))
 
 
-class Instructions(Base):
+class Instruction(Base):
     __tablename__ = "instructions"
     id = Column(Integer, primary_key=True, index=True)
     narrative = Column(String(50))
 
 
-class Ingredients(Base):
+class Ingredient(Base):
     __tablename__ = "ingredients"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(16), index=True)
 
 
-class Recipe_Ingredients(Base):
+class Recipe_Ingredient(Base):
     __tablename__ = "recipie_ingredients"
     recipie_id = Column(ForeignKey("recipies.id"), primary_key=True)
     ingredient_id = Column(ForeignKey("ingredients.id"), primary_key=True)
