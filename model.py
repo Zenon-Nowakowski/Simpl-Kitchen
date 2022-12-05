@@ -24,3 +24,4 @@ class Recipes(Base):
 class Instructions(Base):
     __tablename__ = "instructions"
     id = Column(Integer, primary_key=True, index=True)
+    narrative = Column(String(50))
