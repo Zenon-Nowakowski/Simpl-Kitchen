@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Form
 from fastapi.encoders import jsonable_encoder
 
-from model import Movie
+from model import Movie, Recipe
 import schema
 from database import SessionLocal, engine
 import model
@@ -38,6 +38,12 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 def read_item(request: Request, name: schema.Movie.name, db: Session = Depends(get_database_session)):
     item = db.query(Movie).filter(Movie.id == name).first()
     return templates.TemplateResponse("overview.html", {"request": request, "movie": item})
+
+
+@app.get("/recipe/{name}", response_class=HTMLResponse)
+def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
+    item = db.query(Recipe).filter(Recipe.id == name).first()
+    return templates.TemplateResponse("overview.html", {"request": request, "recipe": item})
 
 
 @app.post("/movie/")
