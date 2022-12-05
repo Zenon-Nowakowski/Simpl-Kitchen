@@ -1,6 +1,7 @@
 from datetime import date
 from pydantic import BaseModel
 
+
 class Movie(BaseModel):
     id = int
     name = str
@@ -9,6 +10,9 @@ class Movie(BaseModel):
     url = str
     rating = str
     data = date
-    
+
+
+class Recipie(BaseModel):
+
     class Config:
         orm_mode = True
