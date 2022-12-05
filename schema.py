@@ -20,9 +20,13 @@ class Recipie(BaseModel):
 
 
 class Instruction(BaseModel):
+    id = int
+    narrative = str
 
 
 class Ingredient(BaseModel):
+    id = int
+    title = str
 
     class Config:
         orm_mode = True
