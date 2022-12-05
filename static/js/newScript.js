@@ -1,11 +1,10 @@
 form = document.getElementById("updateForm");
 
-function updateMovie(id, name, desc) {
-    fetch("/movie/" + id, {
+function updateRecipe(id, name) {
+    fetch("/recipe/" + id, {
         method: "PATCH",
         body: JSON.stringify({
-            name,
-            desc,
+            name
         }),
     }).then((response) => response.json());
     window.location.reload();
@@ -14,13 +13,12 @@ function updateMovie(id, name, desc) {
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("name").value;
-    const des = document.getElementById("desc").value;
     const id = document.getElementById("id").value;
 
-    updateMovie(id, name, des);
+    updateMovie(id, name);
 });
 
-async function deleteMovie(id) {
+async function deleteRecipe(id) {
     const res = await fetch("/movie/" + id, {
         method: "DELETE",
     }).then((response) => response.json());
