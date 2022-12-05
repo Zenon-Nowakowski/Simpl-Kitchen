@@ -62,20 +62,20 @@ async def create_movie(db: Session = Depends(get_database_session), name: schema
     return response
 
 
-@app.patch("/movie/{id}")
-async def update_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
-    requestBody = await request.json()
-    movie = db.query(Movie).get(id)
-    movie.name = requestBody['name']
-    movie.desc = requestBody['desc']
-    db.commit()
-    db.refresh(movie)
-    newMovie = jsonable_encoder(movie)
-    return JSONResponse(status_code=200, content={
-        "status_code": 200,
-        "message": "success",
-        "movie": newMovie
-    })
+# @app.patch("/movie/{id}")
+# async def update_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
+#     requestBody = await request.json()
+#     movie = db.query(Movie).get(id)
+#     movie.name = requestBody['name']
+#     movie.desc = requestBody['desc']
+#     db.commit()
+#     db.refresh(movie)
+#     newMovie = jsonable_encoder(movie)
+#     return JSONResponse(status_code=200, content={
+#         "status_code": 200,
+#         "message": "success",
+#         "movie": newMovie
+#     })
 
 
 @app.patch("/recipe/{id}")
