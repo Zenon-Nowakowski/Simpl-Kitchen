@@ -22,7 +22,7 @@ form.addEventListener("submit", (e) => {
 });
 
 async function deleteRecipe(id) {
-    const res = await fetch("/movie/" + id, {
+    const res = await fetch("/recipe/" + id, {
         method: "DELETE",
     }).then((response) => response.json());
     window.location.reload();
