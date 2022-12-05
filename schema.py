@@ -12,7 +12,7 @@ class Movie(BaseModel):
     data = date
 
 
-class Recipie(BaseModel):
+class Recipe(BaseModel):
     id = int
     instruction_id = int
     name = str
