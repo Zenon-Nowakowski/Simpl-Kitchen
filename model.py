@@ -19,6 +19,7 @@ class Recipes(Base):
     __tablename__ = "recipes"
     id = Column(Integer, primary_key=True, index=True)
     instruction_id = Column(Integer, ForeignKey("instruction.id"))
+    name = Column(String(50), unique=True)
 
 
 class Instructions(Base):
