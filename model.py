@@ -33,3 +33,10 @@ class Ingredients(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(16), index=True)
+
+
+class Recipe_Ingredients(Base):
+    __tablename__ = "recipie_ingredients"
+    recipie_id = Column(ForeignKey("recipies.id"), primary_key=True)
+    ingredient_id = Column(ForeignKey("ingredients.id"), primary_key=True)
+    quantity = Column(Integer)
