@@ -26,7 +26,7 @@ class Recipe(Base):
 class Instruction(Base):
     __tablename__ = "instructions"
     id = Column(Integer, primary_key=True, index=True)
-    narrative = Column(String)
+    narrative = Column(Text())
 
 
 class Ingredient(Base):
