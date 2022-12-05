@@ -34,6 +34,12 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
     return templates.TemplateResponse("index.html", {"request": request, "data": records})
 
 
+@app.get("/", response_class=HTMLResponse)
+async def read_item(request: Request, db: Session = Depends(get_database_session)):
+    records = db.query(Recipe).all()
+    return templates.TemplateResponse("index.html", {"request": request, "data": records})
+
+
 @app.get("/movie/{name}", response_class=HTMLResponse)
 def read_item(request: Request, name: schema.Movie.name, db: Session = Depends(get_database_session)):
     item = db.query(Movie).filter(Movie.id == name).first()
