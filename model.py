@@ -15,7 +15,12 @@ class Movie(Base):
     rating = Column(Integer)
 
 
-class Recipe(Base):
+class Recipes(Base):
     __tablename__ = "recipes"
     id = Column(Integer, primary_key=True, index=True)
     instruction_id = Column(Integer, ForeignKey("instruction.id"))
+
+
+class Instructions(Base):
+    __tablename__ = "instructions"
+    id = Column(Integer, primary_key=True, index=True)
