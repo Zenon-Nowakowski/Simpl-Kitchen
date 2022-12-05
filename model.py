@@ -1,5 +1,5 @@
 from typing import Text
-from sqlalchemy.schema import Column
+from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import String, Integer, Text
 from database import Base
 
@@ -16,4 +16,6 @@ class Movie(Base):
 
 
 class Recipe(Base):
-    __tablename__ = "Recipe"
+    __tablename__ = "recipes"
+    id = Column(Integer, primary_key=True, index=True)
+    instruction_id = Column(Integer, ForeignKey("instruction.id"))
