@@ -18,7 +18,7 @@ class Movie(Base):
 class Recipes(Base):
     __tablename__ = "recipes"
     id = Column(Integer, primary_key=True, index=True)
-    instruction_id = Column(Integer, ForeignKey("instruction.id"))
+    instruction_id = Column(Integer, ForeignKey("instructions.id"))
     name = Column(String(50), unique=True)
 
 
@@ -26,3 +26,10 @@ class Instructions(Base):
     __tablename__ = "instructions"
     id = Column(Integer, primary_key=True, index=True)
     narrative = Column(String(50))
+
+
+class Ingredients(Base):
+    __tablename__ = "ingredients"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(16), index=True)
