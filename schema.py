@@ -13,6 +13,10 @@ class Movie(BaseModel):
 
 
 class Recipie(BaseModel):
+    id = int
+    instruction_id = int
+    name = str
+    picture_url = str
 
     class Config:
         orm_mode = True
