@@ -78,6 +78,22 @@ async def update_movie(request: Request, id: int, db: Session = Depends(get_data
     })
 
 
+@app.patch("/recipe/{id}")
+async def update_recipe(request: Request, id: int, db: Session = Depends(get_database_session)):
+    requestBody = await request.json()
+    recipe = db.query(Recipe).get(id)
+    recipe.name = requestBody['name']
+    recipe.desc = requestBody['desc']
+    db.commit()
+    db.refresh(recipe)
+    newRecipe = jsonable_encoder(recipe)
+    return JSONResponse(status_code=200, content={
+        "status_code": 200,
+        "message": "success",
+        "movie": newRecipe
+    })
+
+
 @app.delete("/movie/{id}")
 async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
     movie = db.query(Movie).get(id)
