@@ -14,9 +14,9 @@ class Movie(BaseModel):
 
 class Recipe(BaseModel):
     id = int
-    instruction_id = int
     name = str
     picture_url = str
+    direction = str
 
 
 class Instruction(BaseModel):
