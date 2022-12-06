@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Form
 from fastapi.encoders import jsonable_encoder
 
-from model import Movie
+from model import Movie, Recipe
 import schema
 from database import SessionLocal, engine
 import model
@@ -28,16 +28,28 @@ def get_database_session():
         db.close()
 
 
+# @app.get("/", response_class=HTMLResponse)
+# async def read_item(request: Request, db: Session = Depends(get_database_session)):
+#     records = db.query(Movie).all()
+#     return templates.TemplateResponse("index.html", {"request": request, "data": records})
+
+
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request, db: Session = Depends(get_database_session)):
-    records = db.query(Movie).all()
-    return templates.TemplateResponse("index.html", {"request": request, "data": records})
+    records = db.query(Recipe).all()
+    return templates.TemplateResponse("newIndex.html", {"request": request, "data": records})
 
 
-@app.get("/movie/{name}", response_class=HTMLResponse)
-def read_item(request: Request, name: schema.Movie.name, db: Session = Depends(get_database_session)):
-    item = db.query(Movie).filter(Movie.id == name).first()
-    return templates.TemplateResponse("overview.html", {"request": request, "movie": item})
+# @app.get("/movie/{name}", response_class=HTMLResponse)
+# def read_item(request: Request, name: schema.Movie.name, db: Session = Depends(get_database_session)):
+#     item = db.query(Movie).filter(Movie.id == name).first()
+#     return templates.TemplateResponse("overview.html", {"request": request, "movie": item})
+
+
+@app.get("/recipe/{name}", response_class=HTMLResponse)
+def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
+    item = db.query(Recipe).filter(Recipe.id == name).first()
+    return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item})
 
 
 @app.post("/movie/")
@@ -50,29 +62,71 @@ async def create_movie(db: Session = Depends(get_database_session), name: schema
     return response
 
 
-@app.patch("/movie/{id}")
-async def update_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
+''' This is the function to add recipes to the database'''
+# @app.post("/recipe/")
+# async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), instruction: schema.Recipe.instruction_id = Form(...)):
+
+#     instruction = instruction()
+#     recipe = Recipe(name=name, picture_url=url, instruction_id=instruction)
+
+#     db.add(movie)
+#     db.commit()
+#     db.refresh(movie)
+#     response = RedirectResponse('/movie', status_code=303)
+#     return response
+
+
+# @app.patch("/movie/{id}")
+# async def update_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
+#     requestBody = await request.json()
+#     movie = db.query(Movie).get(id)
+#     movie.name = requestBody['name']
+#     movie.desc = requestBody['desc']
+#     db.commit()
+#     db.refresh(movie)
+#     newMovie = jsonable_encoder(movie)
+#     return JSONResponse(status_code=200, content={
+#         "status_code": 200,
+#         "message": "success",
+#         "movie": newMovie
+#     })
+
+
+@app.patch("/recipe/{id}")
+async def update_recipe(request: Request, id: int, db: Session = Depends(get_database_session)):
     requestBody = await request.json()
-    movie = db.query(Movie).get(id)
-    movie.name = requestBody['name']
-    movie.desc = requestBody['desc']
+    recipe = db.query(Recipe).get(id)
+    recipe.name = requestBody['name']
+    recipe.desc = requestBody['desc']
     db.commit()
-    db.refresh(movie)
-    newMovie = jsonable_encoder(movie)
+    db.refresh(recipe)
+    newRecipe = jsonable_encoder(recipe)
     return JSONResponse(status_code=200, content={
         "status_code": 200,
         "message": "success",
-        "movie": newMovie
+        "movie": newRecipe
     })
 
 
-@app.delete("/movie/{id}")
+# @app.delete("/movie/{id}")
+# async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
+#     movie = db.query(Movie).get(id)
+#     db.delete(movie)
+#     db.commit()
+#     return JSONResponse(status_code=200, content={
+#         "status_code": 200,
+#         "message": "success",
+#         "movie": None
+#     })
+
+
+@app.delete("/recipe/{id}")
 async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
-    movie = db.query(Movie).get(id)
-    db.delete(movie)
+    recipe = db.query(Recipe).get(id)
+    db.delete(recipe)
     db.commit()
     return JSONResponse(status_code=200, content={
         "status_code": 200,
         "message": "success",
-        "movie": None
+        "recipe": None
     })
