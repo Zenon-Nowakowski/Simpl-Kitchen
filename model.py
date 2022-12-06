@@ -21,12 +21,13 @@ class Recipe(Base):
     instruction_id = Column(Integer, ForeignKey("instructions.id"))
     name = Column(String(50), unique=True)
     picture_url = Column(String(100))
+    direction = Column(Text())
 
 
-class Instruction(Base):
-    __tablename__ = "instructions"
-    id = Column(Integer, primary_key=True, index=True)
-    narrative = Column(Text())
+# class Instruction(Base):
+#     __tablename__ = "instructions"
+#     id = Column(Integer, primary_key=True, index=True)
+#     narrative = Column(Text())
 
 
 class Ingredient(Base):
