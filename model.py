@@ -18,7 +18,6 @@ class Movie(Base):
 class Recipe(Base):
     __tablename__ = "recipes"
     id = Column(Integer, primary_key=True, index=True)
-    instruction_id = Column(Integer, ForeignKey("instructions.id"))
     name = Column(String(50), unique=True)
     picture_url = Column(String(100))
     direction = Column(Text())
