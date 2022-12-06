@@ -11,18 +11,15 @@ class Movie(BaseModel):
     rating = str
     data = date
 
-
 class Recipe(BaseModel):
     id = int
     instruction_id = int
     name = str
     picture_url = str
 
-
 class Instruction(BaseModel):
     id = int
-    narrative = str
-
+    description = str
 
 class Ingredient(BaseModel):
     id = int
