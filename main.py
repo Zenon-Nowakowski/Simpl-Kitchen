@@ -49,9 +49,11 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 @app.get("/recipe/{name}", response_class=HTMLResponse)
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
+
     # Adding ingredients to return with json:
-    #ingredients = db.query(Recipe_Ingredient).filter()
-    return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item})
+    ingredients = db.query(Recipe_Ingredient).filter(
+        Recipe_Ingredient.recipie_id == Recipe.id).all()
+    return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item, "ingredients": ingredients})
 
 
 @app.post("/movie/")
