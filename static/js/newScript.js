@@ -5,7 +5,7 @@ function updateRecipe(id, name, instructions) {
         method: "PATCH",
         body: JSON.stringify({
             name,
-            instructions
+            direction
         }),
     }).then((response) => response.json());
     window.location.reload();
@@ -14,11 +14,11 @@ function updateRecipe(id, name, instructions) {
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("name").value;
-    const instructions = document.getElementById("name").value;
+    const direction = document.getElementById("direction").value;
     const id = document.getElementById("id").value;
 
 
-    updateMovie(id, name, instructions);
+    updateRecipe(id, name, direction);
 });
 
 async function deleteRecipe(id) {
