@@ -19,9 +19,9 @@ class Recipe(BaseModel):
     direction = str
 
 
-class Instruction(BaseModel):
-    id = int
-    narrative = str
+# class Instruction(BaseModel):
+#     id = int
+#     narrative = str
 
 
 class Ingredient(BaseModel):
