@@ -1,6 +1,6 @@
 form = document.getElementById("updateForm");
 
-function updateRecipe(id, name, instructions) {
+function updateRecipe(id, name, direction) {
     fetch("/recipe/" + id, {
         method: "PATCH",
         body: JSON.stringify({

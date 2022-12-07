@@ -101,14 +101,14 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     requestBody = await request.json()
     recipe = db.query(Recipe).get(id)
     recipe.name = requestBody['name']
-    recipe.desc = requestBody['desc']
+    recipe.direction = requestBody['direction']
     db.commit()
     db.refresh(recipe)
     newRecipe = jsonable_encoder(recipe)
     return JSONResponse(status_code=200, content={
         "status_code": 200,
         "message": "success",
-        "movie": newRecipe
+        "recipe": newRecipe
     })
 
 
