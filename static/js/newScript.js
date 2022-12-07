@@ -14,11 +14,11 @@ function updateRecipe(id, name, direction) {
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("name").value;
-    const direction = document.getElementById("direction").value;
+    const di = document.getElementById("direction").value;
     const id = document.getElementById("id").value;
 
 
-    updateRecipe(id, name, direction);
+    updateRecipe(id, name, di);
 });
 
 async function deleteRecipe(id) {
