@@ -33,7 +33,7 @@ class Recipe_Ingredient(BaseModel):
     recipe_id = int
     ingredient_id: int
     quantity: int
-# Add unit column
+    unit: str
 
     class Config:
         orm_mode = True
