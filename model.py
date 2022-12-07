@@ -41,3 +41,4 @@ class Recipe_Ingredient(Base):
     recipie_id = Column(ForeignKey("recipes.id"), primary_key=True)
     ingredient_id = Column(ForeignKey("ingredients.id"), primary_key=True)
     quantity = Column(Integer)
+    unit = Column(String(15))
