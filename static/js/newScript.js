@@ -5,7 +5,7 @@ function updateRecipe(id, name, direction) {
         method: "PATCH",
         body: JSON.stringify({
             name,
-            direction
+            direction,
         }),
     }).then((response) => response.json());
     window.location.reload();
