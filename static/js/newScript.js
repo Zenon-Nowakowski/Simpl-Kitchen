@@ -21,6 +21,7 @@ form.addEventListener("submit", (e) => {
     updateRecipe(id, name, di);
 });
 
+
 async function deleteRecipe(id) {
     const res = await fetch("/recipe/" + id, {
         method: "DELETE",

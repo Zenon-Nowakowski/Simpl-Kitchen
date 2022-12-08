@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Form
 from fastapi.encoders import jsonable_encoder
 
-from model import Movie, Recipe, Recipe_Ingredient
+from model import Movie, Recipe, Recipe_Ingredient, Ingredient
 import schema
 from database import SessionLocal, engine
 import model
@@ -51,19 +51,20 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
     item = db.query(Recipe).filter(Recipe.id == name).first()
 
     # Adding ingredients to return with json:
-    ingredients = db.query(Recipe_Ingredient).filter(
-        Recipe_Ingredient.recipie_id == Recipe.id).all()
+    ingredients = db.query(Ingredient.title).filter(
+        (Ingredient.id == Recipe_Ingredient.ingredient_id) & Recipe_Ingredient.recipie_id == Recipe.id).all()
+
     return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item, "ingredients": ingredients})
 
 
-@app.post("/movie/")
-async def create_movie(db: Session = Depends(get_database_session), name: schema.Movie.name = Form(...), url: schema.Movie.url = Form(...), rate: schema.Movie.rating = Form(...), type: schema.Movie.type = Form(...), desc: schema.Movie.desc = Form(...)):
-    movie = Movie(name=name, url=url, rating=rate, type=type, desc=desc)
-    db.add(movie)
-    db.commit()
-    db.refresh(movie)
-    response = RedirectResponse('/movie', status_code=303)
-    return response
+# @app.post("/movie/")
+# async def create_movie(db: Session = Depends(get_database_session), name: schema.Movie.name = Form(...), url: schema.Movie.url = Form(...), rate: schema.Movie.rating = Form(...), type: schema.Movie.type = Form(...), desc: schema.Movie.desc = Form(...)):
+#     movie = Movie(name=name, url=url, rating=rate, type=type, desc=desc)
+#     db.add(movie)
+#     db.commit()
+#     db.refresh(movie)
+#     response = RedirectResponse('/movie', status_code=303)
+#     return response
 
 
 ''' This is the function to add recipes to the database'''
