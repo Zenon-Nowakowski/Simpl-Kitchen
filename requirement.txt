@@ -4,7 +4,7 @@ autopep8==1.5.7
 click==8.0.1
 fastapi==0.68.1
 FastAPI-SQLAlchemy==0.2.1
-greenlet==1.1.2
+greenlet
 h11==0.12.0
 Jinja2==3.0.1
 MarkupSafe==2.0.1
