@@ -27,9 +27,19 @@
                     <img src="{{recipe.picture_url}}" alt="">
                 </div>
                 <p>{{recipe.direction}}</p>
-                <!--<p>printIng({{ingredients}})</p> -->
-                <script type="text/javascript" scr="printIng('{{ingredients}}')"></script>
+
+
             </div>
+            {% for ingredients in data %}
+            <div>
+                <ul>
+                    <li>
+                        {{ingredients.title}}
+                    </li>
+                </ul>
+
+            </div>
+            {% endfor %}
         </div>
         <div class="modal fade" id="myModal">
             <div class="modal-dialog">
