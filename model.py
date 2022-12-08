@@ -11,7 +11,7 @@ class Movie(Base):
     name = Column(String(50), unique=True)
     desc = Column(Text())
     type = Column(String(20))
-    url = Column(String(100))
+    url = Column(Text())
     rating = Column(Integer)
 
 
