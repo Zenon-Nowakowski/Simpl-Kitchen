@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Form
 from fastapi.encoders import jsonable_encoder
 
-from model import Movie, Recipe, Recipe_Ingredient
+from model import Movie, Recipe, Recipe_Ingredient, Ingredient
 import schema
 from database import SessionLocal, engine
 import model
@@ -51,8 +51,9 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
     item = db.query(Recipe).filter(Recipe.id == name).first()
 
     # Adding ingredients to return with json:
-    ingredients = db.query(Recipe_Ingredient).filter(
-        Recipe_Ingredient.recipie_id == Recipe.id).all()
+    ingredients = db.query(Ingredient.title).filter(
+        (Ingredient.id == Recipe_Ingredient.ingredient_id) & Recipe_Ingredient.recipie_id == Recipe.id).all()
+
     return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item, "ingredients": ingredients})
 
 
