@@ -56,14 +56,14 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
     return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item, "ingredients": ingredients})
 
 
-@app.post("/movie/")
-async def create_movie(db: Session = Depends(get_database_session), name: schema.Movie.name = Form(...), url: schema.Movie.url = Form(...), rate: schema.Movie.rating = Form(...), type: schema.Movie.type = Form(...), desc: schema.Movie.desc = Form(...)):
-    movie = Movie(name=name, url=url, rating=rate, type=type, desc=desc)
-    db.add(movie)
-    db.commit()
-    db.refresh(movie)
-    response = RedirectResponse('/movie', status_code=303)
-    return response
+# @app.post("/movie/")
+# async def create_movie(db: Session = Depends(get_database_session), name: schema.Movie.name = Form(...), url: schema.Movie.url = Form(...), rate: schema.Movie.rating = Form(...), type: schema.Movie.type = Form(...), desc: schema.Movie.desc = Form(...)):
+#     movie = Movie(name=name, url=url, rating=rate, type=type, desc=desc)
+#     db.add(movie)
+#     db.commit()
+#     db.refresh(movie)
+#     response = RedirectResponse('/movie', status_code=303)
+#     return response
 
 
 ''' This is the function to add recipes to the database'''
