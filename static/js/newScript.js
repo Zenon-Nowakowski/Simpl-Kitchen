@@ -21,6 +21,10 @@ form.addEventListener("submit", (e) => {
     updateRecipe(id, name, di);
 });
 
+function printIng(str)
+{
+    const noSpecialCharacters = str.replace(/[^a-zA-Z0-9 ]/g, '');
+}
 
 async function deleteRecipe(id) {
     const res = await fetch("/recipe/" + id, {
