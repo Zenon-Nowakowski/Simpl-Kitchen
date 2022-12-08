@@ -14,14 +14,14 @@ class Movie(BaseModel):
 
 class Recipe(BaseModel):
     id = int
-    instruction_id = int
     name = str
     picture_url = str
+    direction = str
 
 
-class Instruction(BaseModel):
-    id = int
-    narrative = str
+# class Instruction(BaseModel):
+#     id = int
+#     narrative = str
 
 
 class Ingredient(BaseModel):
@@ -33,6 +33,7 @@ class Recipe_Ingredient(BaseModel):
     recipe_id = int
     ingredient_id: int
     quantity: int
+    unit: str
 
     class Config:
         orm_mode = True
