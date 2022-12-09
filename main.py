@@ -29,22 +29,10 @@ def get_database_session():
         db.close()
 
 
-# @app.get("/", response_class=HTMLResponse)
-# async def read_item(request: Request, db: Session = Depends(get_database_session)):
-#     records = db.query(Movie).all()
-#     return templates.TemplateResponse("index.html", {"request": request, "data": records})
-
-
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request, db: Session = Depends(get_database_session)):
     records = db.query(Recipe).all()
     return templates.TemplateResponse("index.html", {"request": request, "data": records})
-
-
-# @app.get("/movie/{name}", response_class=HTMLResponse)
-# def read_item(request: Request, name: schema.Movie.name, db: Session = Depends(get_database_session)):
-#     item = db.query(Movie).filter(Movie.id == name).first()
-#     return templates.TemplateResponse("overview.html", {"request": request, "movie": item})
 
 
 @app.get("/recipe/{name}", response_class=HTMLResponse)
@@ -53,7 +41,7 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
 
     # Adding ingredients to return with json:
     ingredients = db.query(Ingredient).filter(
-        (Ingredient.id == Recipe_Ingredient.ingredient_id) & (Recipe_Ingredient.recipe_id == Recipe.id)).all()
+        Ingredient.id == Recipe_Ingredient.ingredient_id, Recipe_Ingredient.recipe_id == Recipe.id).all()
 
     return templates.TemplateResponse("overview.html", {"request": request, "recipe": item, "data": ingredients})
 
@@ -80,22 +68,6 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
 #     db.refresh(movie)
 #     response = RedirectResponse('/movie', status_code=303)
 #     return response
-
-
-# @app.patch("/movie/{id}")
-# async def update_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
-#     requestBody = await request.json()
-#     movie = db.query(Movie).get(id)
-#     movie.name = requestBody['name']
-#     movie.desc = requestBody['desc']
-#     db.commit()
-#     db.refresh(movie)
-#     newMovie = jsonable_encoder(movie)
-#     return JSONResponse(status_code=200, content={
-#         "status_code": 200,
-#         "message": "success",
-#         "movie": newMovie
-#     })
 
 
 @app.patch("/recipe/{id}")
