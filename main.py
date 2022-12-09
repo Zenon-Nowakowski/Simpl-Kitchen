@@ -7,7 +7,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Form
 from fastapi.encoders import jsonable_encoder
 
-from model import Movie, Recipe, Recipe_Ingredient, Ingredient
+# from model import Movie, Recipe, Recipe_Ingredient, Ingredient
+from model import Recipe, Recipe_Ingredient, Ingredient
 import schema
 from database import SessionLocal, engine
 import model
