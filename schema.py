@@ -26,7 +26,7 @@ class Recipe(BaseModel):
 
 class Ingredient(BaseModel):
     id = int
-    title = str
+    name = str
 
 
 class Recipe_Ingredient(BaseModel):
