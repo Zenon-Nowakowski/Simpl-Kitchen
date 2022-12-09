@@ -52,7 +52,7 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
 
     # Adding ingredients to return with json:
     ingredients = db.query(Ingredient.name).filter(
-        (Ingredient.id == Recipe_Ingredient.ingredient_id) & Recipe_Ingredient.recipie_id == Recipe.id).all()
+        (Ingredient.id == Recipe_Ingredient.ingredient_id) & Recipe_Ingredient.recipe_id == Recipe.id).all()
 
     return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item, "data": ingredients})
 
