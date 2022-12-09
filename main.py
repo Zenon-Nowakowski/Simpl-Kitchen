@@ -38,11 +38,9 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 @app.get("/recipe/{name}", response_class=HTMLResponse)
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
-
     # Adding ingredients to return with json:
     ingredients = db.query(Ingredient).filter(
         Ingredient.id == Recipe_Ingredient.ingredient_id, Recipe_Ingredient.recipe_id == Recipe.id).all()
-
     return templates.TemplateResponse("overview.html", {"request": request, "recipe": item, "data": ingredients})
 
 
@@ -56,9 +54,9 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
 #     return response
 
 
-''' This is the function to add recipes to the database'''
+# ''' This is the function to add recipes to the database'''
 # @app.post("/recipe/")
-# async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), instruction: schema.Recipe.instruction_id = Form(...)):
+# async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), instructions: schema.Recipe.instruction_id = Form(...)):
 
 #     instruction = instruction()
 #     recipe = Recipe(name=name, picture_url=url, instruction_id=instruction)
@@ -85,6 +83,8 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
         "recipe": newRecipe
     })
 
+
+# The movie reference is still here because I haven't got the delete functionality to work with recipe yet.
 
 # @app.delete("/movie/{id}")
 # async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
