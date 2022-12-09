@@ -37,8 +37,8 @@ class Ingredient(Base):
 
 
 class Recipe_Ingredient(Base):
-    __tablename__ = "recipie_ingredients"
-    recipie_id = Column(ForeignKey("recipes.id"), primary_key=True)
+    __tablename__ = "recipe_ingredients"
+    recipe_id = Column(ForeignKey("recipes.id"), primary_key=True)
     ingredient_id = Column(ForeignKey("ingredients.id"), primary_key=True)
     quantity = Column(Integer)
     unit = Column(String(15))
