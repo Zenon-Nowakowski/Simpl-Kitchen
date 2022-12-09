@@ -11,22 +11,22 @@ class Movie(Base):
     name = Column(String(50), unique=True)
     desc = Column(Text())
     type = Column(String(20))
-    url = Column(String(100))
+    url = Column(Text())
     rating = Column(Integer)
 
 
 class Recipe(Base):
     __tablename__ = "recipes"
     id = Column(Integer, primary_key=True, index=True)
-    instruction_id = Column(Integer, ForeignKey("instructions.id"))
     name = Column(String(50), unique=True)
     picture_url = Column(String(100))
+    direction = Column(Text())
 
 
-class Instruction(Base):
-    __tablename__ = "instructions"
-    id = Column(Integer, primary_key=True, index=True)
-    narrative = Column(Text())
+# class Instruction(Base):
+#     __tablename__ = "instructions"
+#     id = Column(Integer, primary_key=True, index=True)
+#     narrative = Column(Text())
 
 
 class Ingredient(Base):
@@ -41,3 +41,4 @@ class Recipe_Ingredient(Base):
     recipie_id = Column(ForeignKey("recipes.id"), primary_key=True)
     ingredient_id = Column(ForeignKey("ingredients.id"), primary_key=True)
     quantity = Column(Integer)
+    unit = Column(String(15))

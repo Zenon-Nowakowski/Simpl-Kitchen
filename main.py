@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Form
 from fastapi.encoders import jsonable_encoder
 
-from model import Movie, Recipe
+from model import Movie, Recipe, Recipe_Ingredient, Ingredient
 import schema
 from database import SessionLocal, engine
 import model
@@ -49,17 +49,22 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 @app.get("/recipe/{name}", response_class=HTMLResponse)
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
-    return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item})
+
+    # Adding ingredients to return with json:
+    ingredients = db.query(Ingredient.title).filter(
+        (Ingredient.id == Recipe_Ingredient.ingredient_id) & Recipe_Ingredient.recipie_id == Recipe.id).all()
+
+    return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item, "data": ingredients})
 
 
-@app.post("/movie/")
-async def create_movie(db: Session = Depends(get_database_session), name: schema.Movie.name = Form(...), url: schema.Movie.url = Form(...), rate: schema.Movie.rating = Form(...), type: schema.Movie.type = Form(...), desc: schema.Movie.desc = Form(...)):
-    movie = Movie(name=name, url=url, rating=rate, type=type, desc=desc)
-    db.add(movie)
-    db.commit()
-    db.refresh(movie)
-    response = RedirectResponse('/movie', status_code=303)
-    return response
+# @app.post("/movie/")
+# async def create_movie(db: Session = Depends(get_database_session), name: schema.Movie.name = Form(...), url: schema.Movie.url = Form(...), rate: schema.Movie.rating = Form(...), type: schema.Movie.type = Form(...), desc: schema.Movie.desc = Form(...)):
+#     movie = Movie(name=name, url=url, rating=rate, type=type, desc=desc)
+#     db.add(movie)
+#     db.commit()
+#     db.refresh(movie)
+#     response = RedirectResponse('/movie', status_code=303)
+#     return response
 
 
 ''' This is the function to add recipes to the database'''
@@ -97,14 +102,14 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     requestBody = await request.json()
     recipe = db.query(Recipe).get(id)
     recipe.name = requestBody['name']
-    recipe.desc = requestBody['desc']
+    recipe.direction = requestBody['direction']
     db.commit()
     db.refresh(recipe)
     newRecipe = jsonable_encoder(recipe)
     return JSONResponse(status_code=200, content={
         "status_code": 200,
         "message": "success",
-        "movie": newRecipe
+        "recipe": newRecipe
     })
 
 
