@@ -55,7 +55,7 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
     ingredients = db.query(Ingredient.name).filter(
         (Ingredient.id == Recipe_Ingredient.ingredient_id) & Recipe_Ingredient.recipe_id == Recipe.id).all()
 
-    return templates.TemplateResponse("newOverview.html", {"request": request, "recipe": item, "data": ingredients})
+    return templates.TemplateResponse("overview.html", {"request": request, "recipe": item, "data": ingredients})
 
 
 # @app.post("/movie/")
