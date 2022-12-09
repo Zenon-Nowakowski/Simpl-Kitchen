@@ -38,7 +38,7 @@ def get_database_session():
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request, db: Session = Depends(get_database_session)):
     records = db.query(Recipe).all()
-    return templates.TemplateResponse("newIndex.html", {"request": request, "data": records})
+    return templates.TemplateResponse("index.html", {"request": request, "data": records})
 
 
 # @app.get("/movie/{name}", response_class=HTMLResponse)
