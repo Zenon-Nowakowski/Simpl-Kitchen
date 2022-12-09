@@ -33,7 +33,7 @@ class Ingredient(Base):
     __tablename__ = "ingredients"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(16), index=True)
+    name = Column(String(16), index=True)
 
 
 class Recipe_Ingredient(Base):
