@@ -23,12 +23,6 @@ class Recipe(Base):
     direction = Column(Text())
 
 
-# class Instruction(Base):
-#     __tablename__ = "instructions"
-#     id = Column(Integer, primary_key=True, index=True)
-#     narrative = Column(Text())
-
-
 class Ingredient(Base):
     __tablename__ = "ingredients"
 
