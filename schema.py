@@ -2,14 +2,14 @@ from datetime import date
 from pydantic import BaseModel
 
 
-class Movie(BaseModel):
-    id = int
-    name = str
-    desc = str
-    type = str
-    url = str
-    rating = str
-    data = date
+# class Movie(BaseModel):
+#     id = int
+#     name = str
+#     desc = str
+#     type = str
+#     url = str
+#     rating = str
+#     data = date
 
 
 class Recipe(BaseModel):
@@ -19,14 +19,9 @@ class Recipe(BaseModel):
     direction = str
 
 
-# class Instruction(BaseModel):
-#     id = int
-#     narrative = str
-
-
 class Ingredient(BaseModel):
     id = int
-    title = str
+    name = str
 
 
 class Recipe_Ingredient(BaseModel):
