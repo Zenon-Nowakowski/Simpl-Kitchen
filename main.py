@@ -54,9 +54,9 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
 #     return response
 
 
-''' This is the function to add recipes to the database'''
+# ''' This is the function to add recipes to the database'''
 # @app.post("/recipe/")
-# async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), instruction: schema.Recipe.instruction_id = Form(...)):
+# async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), instructions: schema.Recipe.instruction_id = Form(...)):
 
 #     instruction = instruction()
 #     recipe = Recipe(name=name, picture_url=url, instruction_id=instruction)
