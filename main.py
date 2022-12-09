@@ -86,6 +86,8 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     })
 
 
+# The movie reference is still here because I haven't got the delete functionality to work with recipe yet.
+
 # @app.delete("/movie/{id}")
 # async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
 #     movie = db.query(Movie).get(id)
