@@ -44,28 +44,21 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
     return templates.TemplateResponse("overview.html", {"request": request, "recipe": item, "data": ingredients})
 
 
-# @app.post("/movie/")
-# async def create_movie(db: Session = Depends(get_database_session), name: schema.Movie.name = Form(...), url: schema.Movie.url = Form(...), rate: schema.Movie.rating = Form(...), type: schema.Movie.type = Form(...), desc: schema.Movie.desc = Form(...)):
-#     movie = Movie(name=name, url=url, rating=rate, type=type, desc=desc)
-#     db.add(movie)
-#     db.commit()
-#     db.refresh(movie)
-#     response = RedirectResponse('/movie', status_code=303)
-#     return response
+''' This is the function to add recipes to the database'''
 
 
-# ''' This is the function to add recipes to the database'''
-# @app.post("/recipe/")
-# async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), instructions: schema.Recipe.instruction_id = Form(...)):
+@app.post("/recipe/")
+async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...)):
 
-#     instruction = instruction()
-#     recipe = Recipe(name=name, picture_url=url, instruction_id=instruction)
+    # right now this adds a recipe, but no ingredients. Here we should do operations on a text file containing a list of ingredients for the recipe.
 
-#     db.add(movie)
-#     db.commit()
-#     db.refresh(movie)
-#     response = RedirectResponse('/movie', status_code=303)
-#     return response
+    recipe = Recipe(name=name, picture_url=url)
+
+    db.add(recipe)
+    db.commit()
+    db.refresh(recipe)
+    response = RedirectResponse('/recipe', status_code=303)
+    return response
 
 
 @app.patch("/recipe/{id}")
