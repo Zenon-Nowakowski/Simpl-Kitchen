@@ -4,3 +4,4 @@ alembic.ini
 __pycache__
 path.py
 __pycache__/database.cpython-310.pyc
+__pycache__/*
