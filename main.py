@@ -77,7 +77,6 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     })
 
 
-# Delete funtionality does not work yet. I think we have to fix the button.
 @app.delete("/recipe/{id}")
 async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
     recipe = db.query(Recipe).get(id)
