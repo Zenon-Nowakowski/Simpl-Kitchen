@@ -39,8 +39,11 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
     # Adding ingredients to return with json:
+    # ingredients = db.query(Ingredient).filter(
+    #     Ingredient.id == Recipe_Ingredient.ingredient_id, Recipe_Ingredient.recipe_id == Recipe.id)
+
     ingredients = db.query(Ingredient).filter(
-        Ingredient.id == Recipe_Ingredient.ingredient_id, Recipe_Ingredient.recipe_id == Recipe.id).all()
+        Recipe.id == Recipe_Ingredient.recipe_id, Ingredient.id == Recipe_Ingredient.ingredient_id)
     return templates.TemplateResponse("overview.html", {"request": request, "recipe": item, "data": ingredients})
 
 
