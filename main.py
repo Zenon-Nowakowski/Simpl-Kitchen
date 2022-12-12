@@ -39,8 +39,11 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
     # Adding ingredients to return with json:
+    # ingredients = db.query(Ingredient).filter(
+    #     Ingredient.id == Recipe_Ingredient.ingredient_id, Recipe_Ingredient.recipe_id == Recipe.id)
+
     ingredients = db.query(Ingredient).filter(
-        Ingredient.id == Recipe_Ingredient.ingredient_id, Recipe_Ingredient.recipe_id == Recipe.id).all()
+        Recipe.id == Recipe_Ingredient.recipe_id, Ingredient.id == Recipe_Ingredient.ingredient_id)
     return templates.TemplateResponse("overview.html", {"request": request, "recipe": item, "data": ingredients})
 
 
@@ -48,11 +51,11 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
 
 
 @app.post("/recipe/")
-async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...)):
+async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), direction: schema.Recipe.direction = Form(...)):
 
     # right now this adds a recipe, but no ingredients. Here we should do operations on a text file containing a list of ingredients for the recipe.
 
-    recipe = Recipe(name=name, picture_url=url)
+    recipe = Recipe(name=name, picture_url=url, direction=direction)
 
     db.add(recipe)
     db.commit()
@@ -61,12 +64,37 @@ async def create_recipe(db: Session = Depends(get_database_session), name: schem
     return response
 
 
+@app.post("/ingreients/")
+async def add_ingredients():
+    pass
+
+
 @app.patch("/recipe/{id}")
 async def update_recipe(request: Request, id: int, db: Session = Depends(get_database_session)):
     requestBody = await request.json()
     recipe = db.query(Recipe).get(id)
-    recipe.name = requestBody['name']
-    recipe.direction = requestBody['direction']
+    print(str(requestBody))
+
+    name = requestBody['name']
+    picture = requestBody['picture']
+    direction = requestBody['direction']
+
+    # This allows me to just add a picture instead of being required to fill out other attributes
+    if len(str(name)) == 0 and len(str(direction)) == 0:
+        recipe.picture_url = picture
+    else:
+        recipe.name = name
+        recipe.picture_url = picture
+        recipe.direction = direction
+
+    # recipe.name = name
+    # recipe.picture_url = picture
+    # recipe.direction = direction
+
+    # recipe.name = requestBody['name']
+    # recipe.picture_url = requestBody['picture']
+    # recipe.direction = requestBody['direction']
+
     db.commit()
     db.refresh(recipe)
     newRecipe = jsonable_encoder(recipe)
@@ -77,7 +105,6 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     })
 
 
-# Delete funtionality does not work yet. I think we have to fix the button.
 @app.delete("/recipe/{id}")
 async def delete_movie(request: Request, id: int, db: Session = Depends(get_database_session)):
     recipe = db.query(Recipe).get(id)
