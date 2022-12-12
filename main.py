@@ -70,6 +70,7 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     recipe = db.query(Recipe).get(id)
     recipe.name = requestBody['name']
     recipe.direction = requestBody['direction']
+    recipe.picture_url = requestBody['picture_url']
     db.commit()
     db.refresh(recipe)
     newRecipe = jsonable_encoder(recipe)
