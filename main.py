@@ -69,6 +69,17 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     requestBody = await request.json()
     recipe = db.query(Recipe).get(id)
     print(str(requestBody))
+
+    name = requestBody['name']
+    picture = requestBody['picture']
+    direction = requestBody['recipe']
+
+    # print("DEBUG LENGTH" + str(len(str(requestBody['name']))))
+
+    # Here I'm starting to add checks for which attribute is updated
+    # if
+    #     recipe.picture_url = requestBody['picture']
+
     recipe.name = requestBody['name']
     recipe.picture_url = requestBody['picture']
     recipe.direction = requestBody['direction']
