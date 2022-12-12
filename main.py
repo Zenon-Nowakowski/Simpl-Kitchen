@@ -68,9 +68,11 @@ async def create_recipe(db: Session = Depends(get_database_session), name: schem
 async def update_recipe(request: Request, id: int, db: Session = Depends(get_database_session)):
     requestBody = await request.json()
     recipe = db.query(Recipe).get(id)
+    print(str(requestBody))
     recipe.name = requestBody['name']
+    recipe.picture_url = requestBody['picture']
     recipe.direction = requestBody['direction']
-    recipe.picture_url = requestBody['picture_url']
+
     db.commit()
     db.refresh(recipe)
     newRecipe = jsonable_encoder(recipe)
