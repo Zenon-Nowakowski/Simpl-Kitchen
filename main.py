@@ -38,6 +38,8 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 @app.get("/recipe/{name}", response_class=HTMLResponse)
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
+    print("DEBUG 1 :: " + Recipe.name)
+    print("DEBUG 2 :: " + str(name))
     # Adding ingredients to return with json:
     # ingredients = db.query(Ingredient).filter(
     #     Ingredient.id == Recipe_Ingredient.ingredient_id, Recipe_Ingredient.recipe_id == Recipe.id)
@@ -64,9 +66,14 @@ async def create_recipe(db: Session = Depends(get_database_session), name: schem
     return response
 
 
-@app.post("/ingreients/")
-async def add_ingredients():
-    pass
+@app.post("/ingredient/")
+async def add_ingredients(db: Session = Depends(get_database_session), name: schema.Ingredient.name = Form(...)):
+    ingredient = Ingredient(name=name)
+    db.add(ingredient)
+    db.commit()
+    db.refresh(ingredient)
+    response = RedirectResponse('/ingredient', status_code=303)
+    return response
 
 
 @app.patch("/recipe/{id}")
@@ -82,6 +89,8 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     # This allows me to just add a picture instead of being required to fill out other attributes
     if len(str(name)) == 0 and len(str(direction)) == 0:
         recipe.picture_url = picture
+    elif len(str(picture) == 0 and len(str(direction))) == 0:
+        recipe.name = name
     else:
         recipe.name = name
         recipe.picture_url = picture
