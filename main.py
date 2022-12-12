@@ -75,9 +75,17 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     recipe = db.query(Recipe).get(id)
     print(str(requestBody))
 
-    recipe.name = requestBody['name']
-    recipe.picture_url = requestBody['picture']
-    recipe.direction = requestBody['direction']
+    name = requestBody['name']
+    picture = requestBody['picture']
+    direction = requestBody['direction']
+
+    recipe.name = name
+    recipe.picture_url = picture
+    recipe.direction = direction
+
+    # recipe.name = requestBody['name']
+    # recipe.picture_url = requestBody['picture']
+    # recipe.direction = requestBody['direction']
 
     db.commit()
     db.refresh(recipe)
