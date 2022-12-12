@@ -79,9 +79,16 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     picture = requestBody['picture']
     direction = requestBody['direction']
 
-    recipe.name = name
-    recipe.picture_url = picture
-    recipe.direction = direction
+    if len(str(name)) == 0 and len(str(direction)) == 0:
+        recipe.picture_url = picture
+    else:
+        recipe.name = name
+        recipe.picture_url = picture
+        recipe.direction = direction
+
+    # recipe.name = name
+    # recipe.picture_url = picture
+    # recipe.direction = direction
 
     # recipe.name = requestBody['name']
     # recipe.picture_url = requestBody['picture']
