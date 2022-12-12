@@ -16,7 +16,7 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("name").value;
     const di = document.getElementById("direction").value;
-    const url = document.getElementById("picture_url").value;
+    const url = document.getElementById("url").value;
     const id = document.getElementById("id").value;
 
 
