@@ -1,6 +1,6 @@
 form = document.getElementById("updateForm");
 
-function updateRecipe(id, name, direction, picture_url) {
+function updateRecipe(id, name, direction) {
     fetch("/recipe/" + id, {
         method: "PATCH",
         body: JSON.stringify({
@@ -16,7 +16,6 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("name").value;
     const di = document.getElementById("direction").value;
-    const url = document.getElementById("url").value;
     const id = document.getElementById("id").value;
 
 
