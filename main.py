@@ -6,7 +6,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Form
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select
 
 # from model import Movie, Recipe, Recipe_Ingredient, Ingredient
 from model import Recipe, Recipe_Ingredient, Ingredient
@@ -40,6 +39,7 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
 
+    # Join that gets the ingredients from a certain recipe
     ingredients = db.query(Ingredient).filter(Ingredient.id == Recipe_Ingredient.ingredient_id,
                                               Recipe.id == Recipe_Ingredient.recipe_id, Recipe.id == name).all()
 
