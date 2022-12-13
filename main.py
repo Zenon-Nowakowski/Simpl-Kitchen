@@ -45,7 +45,7 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
     #     Ingredient.id == Recipe_Ingredient.ingredient_id, Recipe_Ingredient.recipe_id == Recipe.id)
 
     ingredients = db.query(Ingredient).filter(
-        Recipe.id == Recipe_Ingredient.recipe_id, Ingredient.id == Recipe_Ingredient.ingredient_id)
+        Recipe.id == Recipe_Ingredient.recipe_id and Ingredient.id == Recipe_Ingredient.ingredient_id)
     return templates.TemplateResponse("overview.html", {"request": request, "recipe": item, "data": ingredients})
 
 
