@@ -89,20 +89,12 @@ async def update_recipe(request: Request, id: int, db: Session = Depends(get_dat
     # This allows me to just add a picture instead of being required to fill out other attributes
     if len(str(name)) == 0 and len(str(direction)) == 0:
         recipe.picture_url = picture
-    elif len(str(picture) == 0 and len(str(direction))) == 0:
+    elif len(str(picture)) == 0 and len(str(direction)) == 0:
         recipe.name = name
     else:
         recipe.name = name
         recipe.picture_url = picture
         recipe.direction = direction
-
-    # recipe.name = name
-    # recipe.picture_url = picture
-    # recipe.direction = direction
-
-    # recipe.name = requestBody['name']
-    # recipe.picture_url = requestBody['picture']
-    # recipe.direction = requestBody['direction']
 
     db.commit()
     db.refresh(recipe)
