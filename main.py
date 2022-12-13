@@ -52,27 +52,31 @@ def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(
 ''' This is the function to add recipes to the database'''
 
 
+# @app.post("/recipe/")
+# async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), direction: schema.Recipe.direction = Form(...)):
+
+#     # right now this adds a recipe, but no ingredients. Here we should do operations on a text file containing a list of ingredients for the recipe.
+
+#     recipe = Recipe(name=name, picture_url=url, direction=direction)
+
+#     db.add(recipe)
+#     db.commit()
+#     db.refresh(recipe)
+#     response = RedirectResponse('/recipe', status_code=303)
+#     return response
+
+
 @app.post("/recipe/")
-async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), direction: schema.Recipe.direction = Form(...)):
+async def create_recipe(db: Session = Depends(get_database_session), ingredients: str = Form(...), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), direction: schema.Recipe.direction = Form(...)):
 
     # right now this adds a recipe, but no ingredients. Here we should do operations on a text file containing a list of ingredients for the recipe.
 
+    print("DEBUG == " + ingredients)
     recipe = Recipe(name=name, picture_url=url, direction=direction)
-
     db.add(recipe)
     db.commit()
     db.refresh(recipe)
     response = RedirectResponse('/recipe', status_code=303)
-    return response
-
-
-@app.post("/ingredient/")
-async def add_ingredients(db: Session = Depends(get_database_session), name: schema.Ingredient.name = Form(...)):
-    ingredient = Ingredient(name=name)
-    db.add(ingredient)
-    db.commit()
-    db.refresh(ingredient)
-    response = RedirectResponse('/ingredient', status_code=303)
     return response
 
 
