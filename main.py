@@ -71,11 +71,26 @@ async def create_recipe(db: Session = Depends(get_database_session), ingredients
 
     # right now this adds a recipe, but no ingredients. Here we should do operations on a text file containing a list of ingredients for the recipe.
 
-    print("DEBUG == " + ingredients)
+    # ingredients = ingredients.split()
+    # print("DEBUG == /n")
+    # for i in ingredients:
+    #     print(i)
+
     recipe = Recipe(name=name, picture_url=url, direction=direction)
     db.add(recipe)
     db.commit()
     db.refresh(recipe)
+
+    ingredients = ingredients.split()
+
+    for i in ingredients:
+        ingredient = Ingredient(name=i)
+        #test = Recipe_Ingredient()
+
+        db.add(ingredient)
+        db.commit()
+        db.refresh(ingredient)
+
     response = RedirectResponse('/recipe', status_code=303)
     return response
 
