@@ -4,16 +4,6 @@ from sqlalchemy.orm import sessionmaker
 import mysql.connector as mysql
 from path import returnPath
 
-# HOST = "104.237.135.4"
-# DATABASE = "simplkitchen"
-# USER = "remote"
-# PASSWORD = "1234"
-
-# db_connection = mysql.connect(
-#     host=HOST, database=DATABASE, user=USER, password=PASSWORD)
-
-# SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:VLyFUBhvfiVcXn3@localhost:3306/serversiderendering"
-# SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://remote:1234@104.237.135.4:3306/simplkitchen"
 SQLALCHEMY_DATABASE_URL = returnPath()
 
 engine = create_engine(
