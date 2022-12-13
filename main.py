@@ -38,11 +38,6 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 @app.get("/recipe/{name}", response_class=HTMLResponse)
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
-    print("DEBUG 1 :: " + Recipe.name)
-    print("DEBUG 2 :: " + str(name))
-    # Adding ingredients to return with json:
-    # ingredients = db.query(Ingredient).filter(
-    #     Ingredient.id == Recipe_Ingredient.ingredient_id, Recipe_Ingredient.recipe_id == Recipe.id)
 
     ingredients = db.query(Ingredient).filter(
         Recipe.id == Recipe_Ingredient.recipe_id and Ingredient.id == Recipe_Ingredient.ingredient_id)
