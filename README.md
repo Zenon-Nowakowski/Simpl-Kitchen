@@ -7,7 +7,8 @@ To run:
 4. Inside the Simpl-Kitchen directory, run "python -m venv env". You should now have a folder called env inside the main Simpl-Kitchen folder. 
 5. To activate the new virtual environment you just made cd to the Simpl-Kitchen\env\Scripts folder and run "./activate"
 6. Navigate back to the main Simpl-Kitchen directiory and run "pip install -r requirements.txt 
-7. From the Simpl-Kitchen folder run "uvicorn main:app --reload"
+7. Move returnPath.py to your main project folder
+8. From the Simpl-Kitchen folder run "uvicorn main:app --reload"
 
 Notes: 
 1. Do not push changes from your personal branch to main branch. Only go personal -->> dev.
