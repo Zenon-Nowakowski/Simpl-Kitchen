@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Form
 from fastapi.encoders import jsonable_encoder
+from sqlalchemy import select
 
 # from model import Movie, Recipe, Recipe_Ingredient, Ingredient
 from model import Recipe, Recipe_Ingredient, Ingredient
@@ -39,37 +40,17 @@ async def read_item(request: Request, db: Session = Depends(get_database_session
 def read_item(request: Request, name: schema.Recipe.name, db: Session = Depends(get_database_session)):
     item = db.query(Recipe).filter(Recipe.id == name).first()
 
-    ingredients = db.query(Ingredient).filter(
-        Recipe.id == Recipe_Ingredient.recipe_id, Ingredient.id == Recipe_Ingredient.ingredient_id)
+    ingredients = db.query(Ingredient).filter(Ingredient.id == Recipe_Ingredient.ingredient_id,
+                                              Recipe.id == Recipe_Ingredient.recipe_id, Recipe.id == name).all()
+
     return templates.TemplateResponse("overview.html", {"request": request, "recipe": item, "data": ingredients})
 
 
 ''' This is the function to add recipes to the database'''
 
 
-# @app.post("/recipe/")
-# async def create_recipe(db: Session = Depends(get_database_session), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), direction: schema.Recipe.direction = Form(...)):
-
-#     # right now this adds a recipe, but no ingredients. Here we should do operations on a text file containing a list of ingredients for the recipe.
-
-#     recipe = Recipe(name=name, picture_url=url, direction=direction)
-
-#     db.add(recipe)
-#     db.commit()
-#     db.refresh(recipe)
-#     response = RedirectResponse('/recipe', status_code=303)
-#     return response
-
-
 @app.post("/recipe/")
 async def create_recipe(db: Session = Depends(get_database_session), ingredients: str = Form(...), name: schema.Recipe.name = Form(...), url: schema.Recipe.picture_url = Form(...), direction: schema.Recipe.direction = Form(...)):
-
-    # right now this adds a recipe, but no ingredients. Here we should do operations on a text file containing a list of ingredients for the recipe.
-
-    # ingredients = ingredients.split()
-    # print("DEBUG == /n")
-    # for i in ingredients:
-    #     print(i)
 
     recipe = Recipe(name=name, picture_url=url, direction=direction)
     db.add(recipe)
@@ -79,10 +60,16 @@ async def create_recipe(db: Session = Depends(get_database_session), ingredients
     ingredients = ingredients.split()
 
     for i in ingredients:
+        # Add individual ingredients to database.
         ingredient = Ingredient(name=i)
-        #test = Recipe_Ingredient()
-
         db.add(ingredient)
+        db.commit()
+        db.refresh(ingredient)
+
+        # Associates ingredients and recipes
+        ingredients = Recipe_Ingredient(
+            recipe_id=recipe.id, ingredient_id=ingredient.id)
+        db.add(ingredients)
         db.commit()
         db.refresh(ingredient)
 
